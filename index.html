@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>MJ Portfolio</title>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="avatar">
+        <img src="images/3dAvatar.png" alt="mj avatar">
+      </div>
+      <div class="toggle">
+        <a href="index.html" class="toggle-btn active">Home</a>
+        <a href="about.html" class="toggle-btn">About</a>
+      </div>
+      <div class="menu-icon">
+        <img src="images/icons8-hamburger-menu.svg" alt="menu icon">
+      </div>
+    </div>
+  </header>
+
+    <section id="homeContent" class="hero section active">
+      <h1>hi, i'm mark</h1>
+      <div class="location-container">
+        <img src="images/icons8-location.svg" alt="pin map" class="location-icon">
+        <p class="location">parañaque, ph</p>
+      </div>
+      <p class="hero-description">
+        Driven by a passion for coding, I create efficient and user-focused solutions 
+        that push the boundaries of technology, blending creativity with logic.
+      </p>
+      <div class="tsparticles"></div>
+
+      <div class="skills">
+        <img src="images/icons8-html.svg" alt="HTML">
+        <img src="images/icons8-css3.svg" alt="CSS">
+        <img src="images/icons8-javascript 1.svg" alt="JS">
+        <img src="images/icons8-c.svg" alt="C">
+        <img src="images/icons8-c+.svg" alt="C++">
+        <img src="images/icons8-java.svg" alt="Java">
+        <img src="images/icons8-python.svg" alt="Python">
+        <img src="images/icons8-mysql.svg" alt="MySQL">
+      </div>
+
+      <a href="#" class="btn-download-cv"><p class="">Download CV</p></a>
+    
+    </section>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/mark-jason-esguerra-67b061218/" target="_blank"><img src="images/icons8-linkedin-circled 1.svg" alt="LinkedIn"></a>
+      <a href="https://github.com/markjasonesguerra" target="_blank"><img src="images/icons8-github 1.svg" alt="GitHub"></a>
+      <a href="mailto:mrkjsnsgrr@gmail.com" target="_blank"><img src="images/mail.svg" alt="Mail" ></a>
+      <a href="https://www.facebook.com/markjasonesguerraheroman/" target="_blank"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
+    </div>
+    <p>© 2024 Mark Jason Esguerra. All rights reserved.</p>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', function() {
+      const particles = document.querySelector('.tsparticles');
+      const scrollPosition = window.scrollY;
+  
+      // Calculate the zoom-out factor (spread with scroll, up to a max size of 150%)
+      const zoomOutFactor = Math.min(1 + scrollPosition / 600, 1.5);
+  
+      // Apply the new background size, growing the particles
+      particles.style.backgroundSize = `${40 * zoomOutFactor}%`;
+    });
+  
+    // Mousemove effect to control the horizontal movement, keeping top alignment
+    window.addEventListener('mousemove', function(e) {
+      const particles = document.querySelector('.tsparticles');
+  
+      // Get the middle point of the viewport (only horizontally)
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+  
+      // Calculate how far the cursor is from the center of the screen horizontally
+      const offsetX = (e.clientX - centerX) / centerX; // Normalizes from -1 to 1
+      const offsetY = (e.clientY - centerY) / centerY; // Normalizes from -1 to 1
+
+      // Apply a subtle horizontal movement range (e.g., max 30px in each direction)
+      const moveX = offsetX * 15; // Moves horizontally by 15px max
+      const moveY = offsetY * 15; // Moves vertically by 15px max
+
+      // Keep the Y-axis at '0%' for top alignment, and move the X-axis based on the cursor
+      particles.style.backgroundPosition = `calc(50% + ${moveX}px) calc(0% + ${moveY}px)`;
+    });
+
+  </script>
+</body>
+</html>
