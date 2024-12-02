@@ -272,7 +272,7 @@ header.active {
   align-items: center;
   position: relative;
   gap: 0px;
-  overflow: visible; /* Allows images to scale without cutting off */
+  overflow: visible; 
 }
 
 .about-images .left {
@@ -280,7 +280,7 @@ header.active {
   width: 260px;
   height: 347px;
   object-fit: cover;
-  z-index: 1; /* Set lower than middle image */
+  z-index: 1; 
 }
 
 .about-images .mid {
@@ -288,7 +288,7 @@ header.active {
   width: 360px;
   height: 541px;
   object-fit: cover;
-  z-index: 3; /* Ensure middle image is always on top */
+  z-index: 3; 
 }
 
 .about-images .right {
@@ -296,7 +296,7 @@ header.active {
   width: 249px;
   height: 289px;
   object-fit: cover;
-  z-index: 2; /* Set between left and middle */
+  z-index: 1; 
 }
 
 .about-images img {
