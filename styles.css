@@ -286,6 +286,7 @@ header.active {
   width: 360px;
   height: 541px;
   object-fit: cover;
+  z-index: 10;
 }
 
 .about-images .right{
