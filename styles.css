@@ -272,7 +272,6 @@ header.active {
   align-items: center;
   position: relative;
   gap: 0px;
-  overflow: visible; 
 }
 
 .about-images .left {
