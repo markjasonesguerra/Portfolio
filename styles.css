@@ -267,33 +267,36 @@ header.active {
   margin-bottom: 20px;
 }
 
-.about-images{
+.about-images {
   display: inline-flex;
   align-items: center;
   position: relative;
   gap: 0px;
+  overflow: visible; /* Allows images to scale without cutting off */
 }
 
-.about-images .left{
+.about-images .left {
   position: relative;
   width: 260px;
   height: 347px;
   object-fit: cover;
+  z-index: 1; /* Set lower than middle image */
 }
 
-.about-images .mid{
+.about-images .mid {
   position: relative;
   width: 360px;
   height: 541px;
   object-fit: cover;
+  z-index: 3; /* Ensure middle image is always on top */
 }
 
-.about-images .right{
+.about-images .right {
   position: relative;
   width: 249px;
   height: 289px;
   object-fit: cover;
-  z-index: -1;
+  z-index: 2; /* Set between left and middle */
 }
 
 .about-images img {
@@ -301,7 +304,7 @@ header.active {
 }
 
 .about-images img:hover {
-  transform: scale(1.05);
+  transform: scale(1.05); /* Scale on hover */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
