@@ -292,7 +292,6 @@ header.active {
   position: relative;
   width: 249px;
   height: 289px;
-  object-fit: cover;
 }
 
 .about-images img {
