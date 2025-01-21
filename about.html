@@ -16,8 +16,8 @@
       <div class="toggle">
         <div class="toggle-slider"></div>
         <a href="index.html" class="toggle-btn">Home</a>
-        <a href="about.html" class="toggle-btn active">About</a>
-      </div>
+        <a href="about.html" class="toggle-btn">About</a>
+      </div>      
       <div class="menu-icon">
         <img src="images/icons8-hamburger-menu.svg" alt="menu icon">
       </div>
@@ -51,55 +51,6 @@
     </div>
     <p>© 2024 Mark Jason Esguerra. All rights reserved.</p>
   </footer>
-
-  <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    const toggleSlider = document.querySelector('.toggle-slider');
-
-    // Set the active tab based on localStorage
-    const activeTab = localStorage.getItem('activeTab') || 'home';
-    toggleButtons.forEach(button => {
-      if (button.getAttribute('href').includes(activeTab)) {
-        button.classList.add('active');
-      }
-    });
-    const activeIndex = Array.from(toggleButtons).findIndex(button => button.classList.contains('active'));
-    toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
-
-    toggleButtons.forEach(button => {
-      button.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default anchor behavior
-        const targetUrl = this.getAttribute('href');
-
-        // Move the slider
-        if (this.classList.contains('active')) return;
-        toggleButtons.forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-        const index = Array.from(toggleButtons).indexOf(this);
-        toggleSlider.style.transform = `translateX(${index * 100}%)`;
-
-        // Save the active tab in localStorage
-        const tabName = targetUrl.includes('about') ? 'about' : 'home';
-        localStorage.setItem('activeTab', tabName);
-
-        // Navigate to the target URL after a delay
-        setTimeout(() => {
-          window.location.href = targetUrl;
-        }, 300); // Adjust the delay as needed
-      });
-    });
-
-    const avatar = document.querySelector('.avatar img');
-    const avatarMessage = document.getElementById('avatarMessage');
-
-    avatar.addEventListener('click', function() {
-      avatarMessage.style.display = 'block';
-      setTimeout(() => {
-        avatarMessage.style.display = 'none';
-      }, 3000); // Hide after 3 seconds
-    });
-  });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
