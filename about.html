@@ -1,55 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>About Me</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>About Me</title>
 </head>
 <body>
-    <header>
+  <header>
     <div class="header-container">
-        <div class="avatar">
+      <div class="avatar">
         <img src="images/3dAvatar.png" alt="mj avatar">
-        </div>
-        <div class="toggle">
-        <!-- Links to navigate between pages -->
+        <div class="avatar-message" id="avatarMessage">Hi! ☺️</div>
+      </div>
+      <div class="toggle">
+        <div class="toggle-slider"></div>
         <a href="index.html" class="toggle-btn">Home</a>
         <a href="about.html" class="toggle-btn active">About</a>
-        </div>
-        <div class="menu-icon">
+      </div>
+      <div class="menu-icon">
         <img src="images/icons8-hamburger-menu.svg" alt="menu icon">
-        </div>
+      </div>
     </div>
-    </header>
+  </header>
 
-    <section id="aboutContent" class="about-section">
+  <section id="aboutContent" class="about-section">
     <div class="about-images">
-        <img class="left" src="images/1st.png" alt="Image 1">
-        <img class="mid" src="images/2nd.png" alt="Image 2">
-        <img class="right" src="images/3rd.png" alt="Image 3">
+      <img class="left" src="images/1st.png" alt="Image 1">
+      <img class="mid" src="images/2nd.png" alt="Image 2">
+      <img class="right" src="images/3rd.png" alt="Image 3">
     </div>
     <div class="group">
-        <div class="text-wrapper-1"> Hey there, I’m Mark. </div>
-        <p class="about-text">
-            I’m a 3rd-year BSIT student passionate about coding and how software can enhance everyday life. Currently, I'm building my skills in software engineering, crafting efficient, user-focused solutions, and exploring new technologies that push the boundaries of what’s possible. <br><br>
-            I enjoy blending creativity with logic to design systems that solve real-world problems. My journey started in system servicing and some basic coding, and now I’m moving deeper into software engineering, aiming to create scalable, impactful products. <br><br>
-            As an IT student, I enjoy being versatile, from crafting efficient code to focusing on user experience. I value clean, well-structured solutions backed by smart design and technical foundations. I love the idea that software is a living product, capable of evolving and improving with time. <br><br>
-            Outside of coding, I’m deeply into gaming and photography. Whether capturing moments through a lens or immersing myself in virtual worlds, these hobbies fuel my creativity and help me explore different perspectives. <br><br>
-            If you want to connect or chat about tech, gaming, or photography, feel free to reach out!
-        </p>
+      <div class="text-wrapper-1"> Hey there, I’m Mark. </div>
+      <p class="about-text">
+        I’m a 3rd-year BSIT student passionate about coding and how software can enhance everyday life. Currently, I'm building my skills in software engineering, crafting efficient, user-focused solutions, and exploring new technologies that push the boundaries of what’s possible. <br><br>
+        I enjoy blending creativity with logic to design systems that solve real-world problems. My journey started in system servicing and some basic coding, and now I’m moving deeper into software engineering, aiming to create scalable, impactful products. <br><br>
+        As an IT student, I enjoy being versatile, from crafting efficient code to focusing on user experience. I value clean, well-structured solutions backed by smart design and technical foundations. I love the idea that software is a living product, capable of evolving and improving with time. <br><br>
+        Outside of coding, I’m deeply into gaming and photography. Whether capturing moments through a lens or immersing myself in virtual worlds, these hobbies fuel my creativity and help me explore different perspectives. <br><br>
+        If you want to connect or chat about tech, gaming, or photography, feel free to reach out!
+      </p>
     </div>
-    </section>
+  </section>
 
-    <footer>
+  <footer>
     <div class="social-icons">
-        <a href="https://www.linkedin.com/in/mark-jason-esguerra-67b061218/" target="_blank"><img src="images/icons8-linkedin-circled 1.svg" alt="LinkedIn"></a>
-        <a href="https://github.com/markjasonesguerra" target="_blank"><img src="images/icons8-github 1.svg" alt="GitHub"></a>
-        <a href="mailto:mrkjsnsgrr@gmail.com" target="_blank"><img src="images/mail.svg" alt="Mail" ></a>
-        <a href="https://www.facebook.com/markjasonesguerraheroman/" target="_blank"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
+      <a href="https://www.linkedin.com/in/mark-jason-esguerra-67b061218/" target="_blank"><img src="images/icons8-linkedin-circled 1.svg" alt="LinkedIn"></a>
+      <a href="https://github.com/markjasonesguerra" target="_blank"><img src="images/icons8-github 1.svg" alt="GitHub"></a>
+      <a href="mailto:mrkjsnsgrr@gmail.com" target="_blank"><img src="images/mail.svg" alt="Mail" ></a>
+      <a href="https://www.facebook.com/markjasonesguerraheroman/" target="_blank"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
     </div>
     <p>© 2024 Mark Jason Esguerra. All rights reserved.</p>
-    </footer>
+  </footer>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButtons = document.querySelectorAll('.toggle-btn');
+      const toggleSlider = document.querySelector('.toggle-slider');
+
+      // Set the active tab based on localStorage
+      const activeTab = localStorage.getItem('activeTab') || 'home';
+      toggleButtons.forEach(button => {
+        if (button.getAttribute('href').includes(activeTab)) {
+          button.classList.add('active');
+        }
+      });
+      const activeIndex = Array.from(toggleButtons).findIndex(button => button.classList.contains('active'));
+      toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
+
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const targetUrl = this.getAttribute('href');
+
+          // Move the slider
+          if (this.classList.contains('active')) return;
+          toggleButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          const index = Array.from(toggleButtons).indexOf(this);
+          toggleSlider.style.transform = `translateX(${index * 100}%)`;
+
+          // Save the active tab in localStorage
+          const tabName = targetUrl.includes('about') ? 'about' : 'home';
+          localStorage.setItem('activeTab', tabName);
+
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 300); // Match the duration of the slide effect
+        });
+      });
+
+      const avatar = document.querySelector('.avatar img');
+      const avatarMessage = document.getElementById('avatarMessage');
+
+      avatar.addEventListener('click', function() {
+        avatarMessage.style.display = 'block';
+        setTimeout(() => {
+          avatarMessage.style.display = 'none';
+        }, 3000); // Hide after 3 seconds
+      });
+    });
+  </script>
 </body>
 </html>
