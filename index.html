@@ -12,8 +12,10 @@
     <div class="header-container">
       <div class="avatar">
         <img src="images/3dAvatar.png" alt="mj avatar">
+        <div class="avatar-message" id="avatarMessage">Hi! ☺️</div>
       </div>
       <div class="toggle">
+        <div class="toggle-slider"></div>
         <a href="index.html" class="toggle-btn active">Home</a>
         <a href="about.html" class="toggle-btn">About</a>
       </div>
@@ -23,32 +25,31 @@
     </div>
   </header>
 
-    <section id="homeContent" class="hero section active">
-      <h1>hi, i'm mark</h1>
-      <div class="location-container">
-        <img src="images/icons8-location.svg" alt="pin map" class="location-icon">
-        <p class="location">parañaque, ph</p>
-      </div>
-      <p class="hero-description">
-        Driven by a passion for coding, I create efficient and user-focused solutions 
-        that push the boundaries of technology, blending creativity with logic.
-      </p>
-      <div class="tsparticles"></div>
+  <section id="homeContent" class="hero section active">
+    <h1>hi, i'm mark</h1>
+    <div class="location-container">
+      <img src="images/icons8-location.svg" alt="pin map" class="location-icon">
+      <p class="location">parañaque, ph</p>
+    </div>
+    <p class="hero-description">
+      Driven by a passion for coding, I create efficient and user-focused solutions 
+      that push the boundaries of technology, blending creativity with logic.
+    </p>
+    <div class="tsparticles"></div>
 
-      <div class="skills">
-        <img src="images/icons8-html.svg" alt="HTML">
-        <img src="images/icons8-css3.svg" alt="CSS">
-        <img src="images/icons8-javascript 1.svg" alt="JS">
-        <img src="images/icons8-c.svg" alt="C">
-        <img src="images/icons8-c+.svg" alt="C++">
-        <img src="images/icons8-java.svg" alt="Java">
-        <img src="images/icons8-python.svg" alt="Python">
-        <img src="images/icons8-mysql.svg" alt="MySQL">
-      </div>
+    <div class="skills">
+      <img src="images/icons8-html.svg" alt="HTML">
+      <img src="images/icons8-css3.svg" alt="CSS">
+      <img src="images/icons8-javascript 1.svg" alt="JS">
+      <img src="images/icons8-c.svg" alt="C">
+      <img src="images/icons8-c+.svg" alt="C++">
+      <img src="images/icons8-java.svg" alt="Java">
+      <img src="images/icons8-python.svg" alt="Python">
+      <img src="images/icons8-mysql.svg" alt="MySQL">
+    </div>
 
-      <a href="#" class="btn-download-cv"><p class="">Download CV</p></a>
-    
-    </section>
+    <a href="#" class="btn-download-cv"><p class="">Download CV</p></a>
+  </section>
 
   <footer>
     <div class="social-icons">
@@ -64,34 +65,80 @@
     window.addEventListener('scroll', function() {
       const particles = document.querySelector('.tsparticles');
       const scrollPosition = window.scrollY;
-  
+
       // Calculate the zoom-out factor (spread with scroll, up to a max size of 150%)
       const zoomOutFactor = Math.min(1 + scrollPosition / 600, 1.5);
-  
+
       // Apply the new background size, growing the particles
       particles.style.backgroundSize = `${40 * zoomOutFactor}%`;
     });
-  
+
     // Mousemove effect to control the horizontal movement, keeping top alignment
     window.addEventListener('mousemove', function(e) {
       const particles = document.querySelector('.tsparticles');
-  
+
       // Get the middle point of the viewport (only horizontally)
       const centerX = window.innerWidth / 2;
       const centerY = window.innerHeight / 2;
-  
+
       // Calculate how far the cursor is from the center of the screen horizontally
-      const offsetX = (e.clientX - centerX) / centerX; // Normalizes from -1 to 1
-      const offsetY = (e.clientY - centerY) / centerY; // Normalizes from -1 to 1
+      const offsetX = (e.clientX - centerX) / centerX; 
+      const offsetY = (e.clientY - centerY) / centerY; 
 
       // Apply a subtle horizontal movement range (e.g., max 30px in each direction)
-      const moveX = offsetX * 15; // Moves horizontally by 15px max
-      const moveY = offsetY * 15; // Moves vertically by 15px max
+      const moveX = offsetX * 15; 
+      const moveY = offsetY * 15; 
 
       // Keep the Y-axis at '0%' for top alignment, and move the X-axis based on the cursor
       particles.style.backgroundPosition = `calc(50% + ${moveX}px) calc(0% + ${moveY}px)`;
     });
 
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButtons = document.querySelectorAll('.toggle-btn');
+      const toggleSlider = document.querySelector('.toggle-slider');
+
+      // Set the active tab based on localStorage
+      const activeTab = localStorage.getItem('activeTab') || 'home';
+      toggleButtons.forEach(button => {
+        if (button.getAttribute('href').includes(activeTab)) {
+          button.classList.add('active');
+        }
+      });
+      const activeIndex = Array.from(toggleButtons).findIndex(button => button.classList.contains('active'));
+      toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
+
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function(event) {
+          event.preventDefault();
+          const targetUrl = this.getAttribute('href');
+
+          // Move the slider
+          if (this.classList.contains('active')) return;
+          toggleButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          const index = Array.from(toggleButtons).indexOf(this);
+          toggleSlider.style.transform = `translateX(${index * 100}%)`;
+
+          // Save the active tab in localStorage
+          const tabName = targetUrl.includes('about') ? 'about' : 'home';
+          localStorage.setItem('activeTab', tabName);
+
+          setTimeout(() => {
+            window.location.href = targetUrl;
+          }, 300); // Match the duration of the slide effect
+        });
+      });
+
+      const avatar = document.querySelector('.avatar img');
+      const avatarMessage = document.getElementById('avatarMessage');
+
+      avatar.addEventListener('click', function() {
+        avatarMessage.style.display = 'block';
+        setTimeout(() => {
+          avatarMessage.style.display = 'none';
+        }, 3000); // Hide after 3 seconds
+      });
+    });
   </script>
 </body>
 </html>
