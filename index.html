@@ -94,51 +94,52 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-      const toggleButtons = document.querySelectorAll('.toggle-btn');
-      const toggleSlider = document.querySelector('.toggle-slider');
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    const toggleSlider = document.querySelector('.toggle-slider');
 
-      // Set the active tab based on localStorage
-      const activeTab = localStorage.getItem('activeTab') || 'home';
-      toggleButtons.forEach(button => {
-        if (button.getAttribute('href').includes(activeTab)) {
-          button.classList.add('active');
-        }
-      });
-      const activeIndex = Array.from(toggleButtons).findIndex(button => button.classList.contains('active'));
-      toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
+    // Set the active tab based on localStorage
+    const activeTab = localStorage.getItem('activeTab') || 'home';
+    toggleButtons.forEach(button => {
+      if (button.getAttribute('href').includes(activeTab)) {
+        button.classList.add('active');
+      }
+    });
+    const activeIndex = Array.from(toggleButtons).findIndex(button => button.classList.contains('active'));
+    toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
 
-      toggleButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-          event.preventDefault();
-          const targetUrl = this.getAttribute('href');
+    toggleButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent default anchor behavior
+        const targetUrl = this.getAttribute('href');
 
-          // Move the slider
-          if (this.classList.contains('active')) return;
-          toggleButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          const index = Array.from(toggleButtons).indexOf(this);
-          toggleSlider.style.transform = `translateX(${index * 100}%)`;
+        // Move the slider
+        if (this.classList.contains('active')) return;
+        toggleButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        const index = Array.from(toggleButtons).indexOf(this);
+        toggleSlider.style.transform = `translateX(${index * 100}%)`;
 
-          // Save the active tab in localStorage
-          const tabName = targetUrl.includes('about') ? 'about' : 'home';
-          localStorage.setItem('activeTab', tabName);
+        // Save the active tab in localStorage
+        const tabName = targetUrl.includes('about') ? 'about' : 'home';
+        localStorage.setItem('activeTab', tabName);
 
-          setTimeout(() => {
-            window.location.href = targetUrl;
-          }, 300); // Match the duration of the slide effect
-        });
-      });
-
-      const avatar = document.querySelector('.avatar img');
-      const avatarMessage = document.getElementById('avatarMessage');
-
-      avatar.addEventListener('click', function() {
-        avatarMessage.style.display = 'block';
+        // Navigate to the target URL after a delay
         setTimeout(() => {
-          avatarMessage.style.display = 'none';
-        }, 3000); // Hide after 3 seconds
+          window.location.href = targetUrl;
+        }, 300); // Adjust the delay as needed
       });
     });
+
+    const avatar = document.querySelector('.avatar img');
+    const avatarMessage = document.getElementById('avatarMessage');
+
+    avatar.addEventListener('click', function() {
+      avatarMessage.style.display = 'block';
+      setTimeout(() => {
+        avatarMessage.style.display = 'none';
+      }, 3000); // Hide after 3 seconds
+    });
+  });
   </script>
 </body>
 </html>
