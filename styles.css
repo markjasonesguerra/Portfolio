@@ -81,7 +81,7 @@ header.active {
   border-radius: 30px;
   padding: 4px;
   gap: 10px;
-  box-shadow: 0 8px 40px #0000001f; 
+  box-shadow: 0 8px 40px #0000001f;
   transition: background-color 0.3s ease;
   position: relative;
   width: 200px; /* Adjust width as needed */
@@ -102,10 +102,9 @@ header.active {
   z-index: 1; /* Ensure the buttons are above the slider */
 }
 
-.toggle-btn.active,
-.toggle-btn:focus {
-  color: #282828;
-  transform: scale(1.05); /* Slightly enlarge the active button */
+.toggle-btn.active {
+  color: #282828 !important;
+  font-weight: bold; /* Optional for emphasis */
 }
 
 .toggle-btn:hover {
@@ -396,6 +395,211 @@ header.active {
   100% { opacity: 0; }
 }
 
+/* Center the project card wrapper and set its dimensions */
+.project-card-wrapper {
+  width: 1043px;
+  height: 493px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Center horizontally */
+  margin-bottom: 120px;
+  background-color: #EAEDEF; /* Initial background color */
+  border-radius: 24px; /* Set border radius */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Initial box shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.project-card-wrapper:hover {
+  background-color: #f7f7f7; /* Background color on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Box shadow on hover */
+  transform: scale(1.01); /* Scale up on hover */
+}
+
+.project-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  box-shadow: none;
+  cursor: pointer;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.project-card-left {
+  flex: 1;
+  margin: 0 30px;
+}
+
+.project-card-left h2 {
+  background-image: linear-gradient(333deg, #323235 73%, #5e5e63);
+  letter-spacing: -.01em;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 36px; /* Adjust font size as needed */
+  font-weight: bold;
+  line-height: 120%;
+}
+
+.language-icon {
+  margin-left: 10px; /* Adjust spacing as needed */
+}
+
+.project-card-left .project-type {
+  color: #5e5e63;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 160%;
+}
+
+.project-card-left .project-description {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  line-height: 170%;
+  color: #5e5e63;
+}
+
+/* Primary button styles */
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  will-change: transform;
+  text-decoration: none;
+}
+
+.primary-button:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.button-text {
+  background-image: linear-gradient(107deg, #74747a, #323235);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.button-icon {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.primary-button:hover .button-icon {
+  transform: translateX(5px);
+}
+
+
+/*!                 -------------------- */
+
+.btn-read-more {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  background-color: #0078d7;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+  background-color: #005bb5;
+}
+
+.project-images {
+  flex: 1 1 45%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.project-images img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-read-more {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  background-color: #0078d7;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+  background-color: #005bb5;
+}
+
+.project-images {
+  flex: 1 1 45%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.project-images img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-read-more {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  background-color: #0078d7;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn-read-more:hover {
+  background-color: #005bb5;
+}
+
+.project-images {
+  flex: 1 1 45%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.project-images img {
+  max-width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 /* Footer section */
 footer {
   width: 100%;
@@ -464,6 +668,32 @@ footer p {
   .skills img {
     width: 40px;
     height: 40px;
+}
+
+.project-card-wrapper {
+  width: 90%;
+  height: auto;
+  margin-bottom: 60px;
+}
+
+.project-card {
+  flex-direction: column;
+  padding: 20px;
+}
+
+.project-card-left {
+  margin: 0;
+  text-align: center;
+}
+
+.project-card-right {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.project-card-right img {
+  width: 100%;
+  height: auto;
 }
 
 }
@@ -572,4 +802,33 @@ footer p {
     font-size: 30px; /* Adjust font size for mobile view */
     padding-left: 10px;
   }
+
+
+/* Center the project card wrapper and set its dimensions */
+  .project-card-wrapper {
+    width: 100%;
+    height: auto;
+    margin-bottom: 40px;
+  }
+
+  .project-card {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .project-card-left {
+    margin: 0;
+    text-align: center;
+  }
+
+  .project-card-right {
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  .project-card-right img {
+    width: 100%;
+    height: auto;
+  }
+
 }
