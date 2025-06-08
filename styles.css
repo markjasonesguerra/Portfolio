@@ -348,7 +348,7 @@ header.active {
 
 .menu-icon {
   display: flex;
-  width: 6px;
+  width: 64px;
   height: 61px;
   background-color: white;
   border-radius: 50%;
