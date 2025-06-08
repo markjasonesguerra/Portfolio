@@ -52,6 +52,14 @@ header.active {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.header-container.hide-on-scroll {
+  transform: translateY(-120%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.header-container {
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
 .avatar {
   transition: transform 0.3s ease; /* Smooth transition */
   filter: drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.25)); /* Adjusted spread radius */
@@ -340,14 +348,10 @@ header.active {
 
 .menu-icon {
   display: flex;
-  width: 15vw;
-  height: 15vw;
-  max-width: 66px;
-  max-height: 66px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 6px;
+  height: 61px;
   background-color: white;
-  border-radius: 33px;
+  border-radius: 50%;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -441,6 +445,22 @@ header.active {
 .project-card-left {
   flex: 1;
   margin: 0 30px;
+}
+
+.project-card-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+}
+
+.project-card-right img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .project-card-left h2 {

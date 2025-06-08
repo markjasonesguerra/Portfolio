@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = this.getAttribute('href');
         });
     });
+    
 });
 
 
@@ -152,18 +153,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Generate fireflies with some blurrier than others
   const fireflies = [];
-  for (let i = 0; i < 80; i++) {
+    for (let i = 0; i < 80; i++) {
+    const isSuperSmall = Math.random() < 0.2;
     fireflies.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      radius: Math.random() * 1.2 + 0.7,
-      dx: (Math.random() - 0.5) * 0.3,
-      dy: (Math.random() - 0.5) * 0.3,
-      opacity: Math.random() * 0.5 + 0.5,
-      direction: Math.random() < 0.5 ? 1 : -1,
-      blur: Math.random() < 0.5 ? 32 : Math.random() * 60 + 30 // much blurrier
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: isSuperSmall ? Math.random() * 0.5 + 0.2 : Math.random() * 1.2 + 0.7,
+        dx: (Math.random() - 0.5) * 0.3,
+        dy: (Math.random() - 0.5) * 0.3,
+        opacity: Math.random() * 0.5 + 0.5,
+        direction: Math.random() < 0.5 ? 1 : -1,
+        blur: Math.random() < 0.5 ? 32 : Math.random() * 60 + 30 
     });
-  }
+    }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -206,4 +208,14 @@ document.addEventListener('DOMContentLoaded', function () {
   draw();
 
   window.addEventListener("resize", resizeCanvas);
+});
+
+window.addEventListener('scroll', function() {
+  const headerContainer = document.querySelector('.header-container');
+  if (!headerContainer) return;
+  if (window.scrollY > 30) {
+    headerContainer.classList.add('hide-on-scroll');
+  } else {
+    headerContainer.classList.remove('hide-on-scroll');
+  }
 });
