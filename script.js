@@ -161,32 +161,32 @@ document.addEventListener('DOMContentLoaded', function () {
       dy: (Math.random() - 0.5) * 0.3,
       opacity: Math.random() * 0.5 + 0.5,
       direction: Math.random() < 0.5 ? 1 : -1,
-      blur: Math.random() < 0.5 ? 18 : Math.random() * 40 + 20 // some normal, some very blurry
+      blur: Math.random() < 0.5 ? 32 : Math.random() * 60 + 30 // much blurrier
     });
   }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fireflies.forEach(f => {
-      // Outer glow
+      // Outer glow (very soft, dirty white)
       ctx.save();
-      ctx.globalAlpha = f.opacity * 0.7;
+      ctx.globalAlpha = f.opacity * 0.5;
       ctx.beginPath();
-      ctx.arc(f.x, f.y, f.radius * 2.8, 0, Math.PI * 2);
-      ctx.shadowColor = 'rgba(255,255,200,1)';
+      ctx.arc(f.x, f.y, f.radius * 3.5, 0, Math.PI * 2);
+      ctx.shadowColor = 'rgba(235,235,220,1)';
       ctx.shadowBlur = f.blur * 1.5;
-      ctx.fillStyle = 'rgba(255,255,200,0.18)';
+      ctx.fillStyle = 'rgba(235,235,220,0.12)';
       ctx.fill();
       ctx.restore();
 
-      // Core
+      // Core (small, bright, dirty white)
       ctx.save();
-      ctx.globalAlpha = f.opacity;
+      ctx.globalAlpha = f.opacity * 0.9;
       ctx.beginPath();
       ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,220,1)';
-      ctx.shadowColor = 'rgba(255,255,220,0.7)';
-      ctx.shadowBlur = f.blur * 0.5;
+      ctx.fillStyle = 'rgba(245,245,230,1)';
+      ctx.shadowColor = 'rgba(245,245,230,0.7)';
+      ctx.shadowBlur = f.blur * 0.6;
       ctx.fill();
       ctx.restore();
 
@@ -205,7 +205,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
   draw();
 
-  window.addEventListener("resize", () => {
-    resizeCanvas();
-  });
+  window.addEventListener("resize", resizeCanvas);
 });
