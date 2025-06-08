@@ -129,7 +129,6 @@ header.active {
 .about-section {
   text-align: center;
   padding: 40px 0;
-  background-color: #f4f6f8;
 }
 
 /* Hero section */
@@ -141,8 +140,8 @@ header.active {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 150px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .tsparticles {
@@ -275,7 +274,7 @@ header.active {
 
 .about-text {
   font-size: 13px;
-  color: #555;
+  color: #dddddd;
   line-height: 1.8;
   text-align: left; /* Center the text */
   margin-bottom: 20px;
@@ -322,7 +321,6 @@ header.active {
 
 .about-images img:hover {
   transform: scale(1.05);
-  background-color: #f4f6f8;
 }
 
 .btn-read-more {
@@ -393,6 +391,17 @@ header.active {
 @keyframes fadeOut {
   0% { opacity: 1; }
   100% { opacity: 0; }
+}
+
+.project-card {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.project-card.animate {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Center the project card wrapper and set its dimensions */
@@ -633,6 +642,16 @@ footer p {
   color: gray;
 }
 
+#firefly-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000; /* deep sea black */
+  pointer-events: none;
+}
 /* Smaller screens (Tablets) */
 @media (max-width: 768px) {
   .hero h1 {

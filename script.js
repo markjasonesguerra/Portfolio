@@ -115,3 +115,79 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3500); // Adjust the timing to match the animation duration
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const projectCards = document.querySelectorAll('.project-card');
+
+  const observerOptions = {
+    threshold: 0.3
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+      }
+    });
+  }, observerOptions);
+
+  projectCards.forEach(card => {
+    observer.observe(card);
+  });
+});
+
+
+// 
+
+document.addEventListener('DOMContentLoaded', function () {
+  const canvas = document.getElementById("firefly-bg");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+
+  const fireflies = [];
+  for (let i = 0; i < 80; i++) {
+    fireflies.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5,
+      opacity: Math.random(),
+      direction: Math.random() < 0.5 ? 1 : -1,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    fireflies.forEach(f => {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 200, ${f.opacity})`;
+      ctx.shadowColor = `rgba(255, 255, 200, ${f.opacity})`;
+      ctx.shadowBlur = 12;
+      ctx.fill();
+
+      f.x += f.dx;
+      f.y += f.dy;
+
+      if (f.x < 0 || f.x > canvas.width) f.dx *= -1;
+      if (f.y < 0 || f.y > canvas.height) f.dy *= -1;
+
+      f.opacity += 0.005 * f.direction;
+      if (f.opacity <= 0 || f.opacity >= 1) f.direction *= -1;
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+  window.addEventListener("resize", resizeCanvas);
+});
