@@ -138,8 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// 
-
+// Firefly Background Animation
 document.addEventListener('DOMContentLoaded', function () {
   const canvas = document.getElementById("firefly-bg");
   if (!canvas) return;
@@ -151,28 +150,45 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   resizeCanvas();
 
+  // Generate fireflies with some blurrier than others
   const fireflies = [];
   for (let i = 0; i < 80; i++) {
     fireflies.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      radius: Math.random() * 1.5 + 0.5,
-      dx: (Math.random() - 0.5) * 0.5,
-      dy: (Math.random() - 0.5) * 0.5,
-      opacity: Math.random(),
+      radius: Math.random() * 1.2 + 0.7,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.5 + 0.5,
       direction: Math.random() < 0.5 ? 1 : -1,
+      blur: Math.random() < 0.5 ? 18 : Math.random() * 40 + 20 // some normal, some very blurry
     });
   }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fireflies.forEach(f => {
+      // Outer glow
+      ctx.save();
+      ctx.globalAlpha = f.opacity * 0.7;
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.radius * 2.8, 0, Math.PI * 2);
+      ctx.shadowColor = 'rgba(255,255,200,1)';
+      ctx.shadowBlur = f.blur * 1.5;
+      ctx.fillStyle = 'rgba(255,255,200,0.18)';
+      ctx.fill();
+      ctx.restore();
+
+      // Core
+      ctx.save();
+      ctx.globalAlpha = f.opacity;
       ctx.beginPath();
       ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 200, ${f.opacity})`;
-      ctx.shadowColor = `rgba(255, 255, 200, ${f.opacity})`;
-      ctx.shadowBlur = 12;
+      ctx.fillStyle = 'rgba(255,255,220,1)';
+      ctx.shadowColor = 'rgba(255,255,220,0.7)';
+      ctx.shadowBlur = f.blur * 0.5;
       ctx.fill();
+      ctx.restore();
 
       f.x += f.dx;
       f.y += f.dy;
@@ -181,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (f.y < 0 || f.y > canvas.height) f.dy *= -1;
 
       f.opacity += 0.005 * f.direction;
-      if (f.opacity <= 0 || f.opacity >= 1) f.direction *= -1;
+      if (f.opacity <= 0.3 || f.opacity >= 1) f.direction *= -1;
     });
 
     requestAnimationFrame(draw);
@@ -189,5 +205,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   draw();
 
-  window.addEventListener("resize", resizeCanvas);
+  window.addEventListener("resize", () => {
+    resizeCanvas();
+  });
 });
