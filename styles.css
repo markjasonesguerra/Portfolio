@@ -61,18 +61,56 @@ header.active {
 }
 
 .avatar {
-  transition: transform 0.3s ease; /* Smooth transition */
-  filter: drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.25)); /* Adjusted spread radius */
+  position: relative;
+  z-index: 100;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s;
+  filter: drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.25));
+  border-radius: 50%;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar:hover {
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(59, 58, 58, 0.3);
 }
 
 .avatar:active {
-  transform: scale(1.2); /* Scale up on click */
+  transform: scale(1.2);
 }
 
 .avatar img {
   width: 66px;
   height: 66px;
   border-radius: 50%;
+  display: block;
+}
+
+.avatar-message {
+  position: absolute;
+  top: 100%; /* Position just below the avatar */
+  left: 50%;
+  transform: translate(-50%, -10px); /* Start slightly above */
+  background: #fff;
+  color: #282828;
+  padding: 6px 16px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px #0001;
+  font-size: 1rem;
+  font-family: Poppins, sans-serif;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+  z-index: 101;
+}
+
+.avatar-message.show-message {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 10px); /* Slide downward into view */
 }
 
 .header-container {
@@ -80,6 +118,7 @@ header.active {
   justify-content: space-between;
   width: 80%;
   align-items: center;
+  overflow: visible;
 }
 
 .toggle {
@@ -346,45 +385,109 @@ header.active {
   background-color: #555;
 }
 
+.menu-container {
+  position: relative;
+  z-index: 2000;
+}
+
 .menu-icon {
-  display: flex;
   width: 64px;
-  height: 61px;
-  background-color: white;
+  height: 64px;
+  background: #fff;
   border-radius: 50%;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 40px #0000001f;
+  transition: transform 0.3s, box-shadow 0.3s;
   position: relative;
-  box-shadow: 0 8px 40px #0000001f; 
-  transition: transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
 .menu-icon:hover {
-  transform: rotate(5deg) scale(1.1); /* Rotate and scale up on hover */
-  box-shadow: 0 4px 10px rgba(59, 58, 58, 0.3); /* Add a shadow on hover */
+  transform: rotate(5deg);
+  box-shadow: 0 4px 10px rgba(59, 58, 58, 0.3);
 }
 
-.menu-icon img {
-  width: 40%;
-  height: 40%;
-  background: none;
-  position: relative;
+.menu-icon .bar {
+  width: 24px;
+  height: 2px;
+  background: #444;
+  border-radius: 2px;
+  transition: 0.3s;
+  box-shadow: 0 1px 2px #0001;
+  will-change: transform, opacity;
 }
 
-.avatar-message {
-  display: none;
+.menu-icon .top    { margin-bottom: 5.5px; }
+.menu-icon .middle { margin: 0; }
+.menu-icon .bottom { margin-top: 6px; }
+
+.menu-icon.active .top {
+  transform: rotate(45deg) translate(5.5px, 5.5px);
+}
+
+.menu-icon.active .middle {
+  opacity: 0;
+}
+
+.menu-icon.active .bottom {
+  transform: rotate(-45deg) translate(5.5px, -5.5px);
+}
+
+.menu-popup {
   position: absolute;
-  top: 80px; /* Adjust based on the size of your avatar */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #333;
-  z-index: 1000;
-  white-space: nowrap; /* Prevent line breaks */
-  animation: slideDown 0.5s forwards, fadeOut 3s forwards 2.5s;
+  top: 80px;
+  right: 0;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px #0000001f;
+  padding: 10px 0;
+  width: 160px;
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  z-index: 99;
+}
+
+.menu-popup.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.menu-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-popup li {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  color: #282828;
+  font-family: Poppins, sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 8px;
+}
+
+.menu-popup li.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.menu-popup li:hover:not(.disabled) {
+  background-color: #f3f3f3;
+}
+
+.menu-popup li .icon {
+  margin-right: 10px;
+  font-size: 1.2em;
 }
 
 @keyframes slideDown {

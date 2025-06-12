@@ -125,16 +125,19 @@ window.addEventListener('mousemove', function(e) {
 document.addEventListener('DOMContentLoaded', function () {
     const avatar = document.querySelector('.avatar');
     const avatarMessage = document.getElementById('avatarMessage');
+    let timeoutId = null;
 
     avatar.addEventListener('click', function () {
-        avatarMessage.style.display = 'block';
+        // Show the message
         avatarMessage.classList.add('show-message');
 
-        // Remove the message after the animation ends
-        setTimeout(() => {
-            avatarMessage.style.display = 'none';
+        // Clear any existing timeout to prevent stacking
+        clearTimeout(timeoutId);
+
+        // Hide the message after 3 seconds
+        timeoutId = setTimeout(() => {
             avatarMessage.classList.remove('show-message');
-        }, 3500); // Adjust the timing to match the animation duration
+        }, 3000);
     });
 });
 
@@ -239,4 +242,22 @@ window.addEventListener('scroll', function() {
   } else {
     headerContainer.classList.remove('hide-on-scroll');
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const menuPopup = document.getElementById('menuPopup');
+
+  menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('active');
+    menuPopup.classList.toggle('show');
+  });
+
+  // Optional: close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!menuToggle.contains(e.target) && !menuPopup.contains(e.target)) {
+      menuToggle.classList.remove('active');
+      menuPopup.classList.remove('show');
+    }
+  });
 });
