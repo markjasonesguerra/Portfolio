@@ -254,14 +254,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let lastScrollY = window.scrollY;
 const header = document.querySelector('header');
+const threshold = 50; // px from top before header can hide
 
 window.addEventListener('scroll', function() {
-  if (window.scrollY > lastScrollY) {
-    // Scrolling down
-    header.classList.add('hide-on-scroll');
-  } else {
-    // Scrolling up
-    header.classList.remove('hide-on-scroll');
+  if (window.innerWidth <= 480) { // Only on mobile
+    if (window.scrollY < threshold) {
+      // Always show header near the top
+      header.classList.remove('hide-on-scroll');
+    } else if (window.scrollY > lastScrollY) {
+      // Scrolling down
+      header.classList.add('hide-on-scroll');
+    } else {
+      // Scrolling up
+      header.classList.remove('hide-on-scroll');
+    }
+    lastScrollY = window.scrollY;
   }
-  lastScrollY = window.scrollY;
 });
