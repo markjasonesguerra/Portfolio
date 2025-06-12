@@ -234,16 +234,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener("resize", resizeCanvas);
 });
 
-window.addEventListener('scroll', function() {
-  const headerContainer = document.querySelector('.header-container');
-  if (!headerContainer) return;
-  if (window.scrollY > 30) {
-    headerContainer.classList.add('hide-on-scroll');
-  } else {
-    headerContainer.classList.remove('hide-on-scroll');
-  }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menuToggle');
   const menuPopup = document.getElementById('menuPopup');
@@ -260,4 +250,18 @@ document.addEventListener('DOMContentLoaded', () => {
       menuPopup.classList.remove('show');
     }
   });
+});
+
+let lastScrollY = window.scrollY;
+const header = document.querySelector('header');
+
+window.addEventListener('scroll', function() {
+  if (window.scrollY > lastScrollY) {
+    // Scrolling down
+    header.classList.add('hide-on-scroll');
+  } else {
+    // Scrolling up
+    header.classList.remove('hide-on-scroll');
+  }
+  lastScrollY = window.scrollY;
 });

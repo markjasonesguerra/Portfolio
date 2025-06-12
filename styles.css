@@ -31,6 +31,14 @@ header {
   animation: slideIn 0.6s ease-out;
 }
 
+header.hide-on-scroll {
+  transform: translateY(-150%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+header {
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
 main {
   flex-grow: 1;
 }
@@ -842,6 +850,14 @@ footer p {
 
 /* Very small screens (Mobile) */
 @media (max-width: 480px) {
+  header.hide-on-scroll {
+    transform: translateY(-120%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  header {
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
   .group {
     padding: 20px;
     margin: 0 auto; /* Center content */
