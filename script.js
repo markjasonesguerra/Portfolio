@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleSlider = document.querySelector('.toggle-slider');
     
     // Determine the current page using URL
-    const currentPage = window.location.pathname.includes('about.html') ? 'about' : 'home';
+    const currentPage = window.location.pathname === '/about.html' ? 'about' : 'home';
 
     // Highlight the correct button and update slider
     const updateActiveButton = () => {
@@ -29,14 +29,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Update UI when a toggle button is clicked
     toggleButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default navigation
-
-            // Navigate to the clicked tab
-            window.location.href = this.getAttribute('href');
-        });
+      const href = button.getAttribute('href');
+      const isActive =
+        (currentPage === 'home' && (href === '/' || href === '/index.html')) ||
+        (currentPage === 'about' && href === '/about.html');
+      button.classList.toggle('active', isActive);
     });
-    
 });
 
 
