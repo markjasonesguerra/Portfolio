@@ -106,7 +106,7 @@ header.active {
   flex: 1;
   text-align: center;
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.3s ease;
   z-index: 1; /* Ensure the buttons are above the slider */
 }
 

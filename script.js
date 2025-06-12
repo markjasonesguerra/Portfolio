@@ -1,21 +1,69 @@
 document.addEventListener('DOMContentLoaded', () => {
   const toggleButtons = document.querySelectorAll('.toggle-btn');
   const toggleSlider = document.querySelector('.toggle-slider');
-  let p = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
+
+  // Determine normalized path
+  let p = window.location.pathname.replace(/\/$/, '');
   let page = 'home';
   if (p.includes('about')) page = 'about';
-  // You could add more checks, but beware of false positives (e.g., ‘/projects/about.html’).
+  // Map page to index: Home=0, About=1
+  const pageIndexMap = { home: 0, about: 1 };
+  const currentIndex = pageIndexMap[page] ?? 0;
+
+  toggleButtons.forEach((btn, idx) => {
+    btn.addEventListener('click', function (event) {
+      const activeBtn = document.querySelector('.toggle-btn.active');
+      let activeIdx = Array.from(toggleButtons).indexOf(activeBtn);
+      if (activeIdx === -1) {
+
+        activeIdx = currentIndex;
+      }
+
+      sessionStorage.setItem('togglePrevIndex', activeIdx.toString());
+    });
+  });
+
+
+  const prevIndexRaw = sessionStorage.getItem('togglePrevIndex');
+  const prevIndex = prevIndexRaw !== null ? parseInt(prevIndexRaw, 10) : null;
+
+
+  const newIndex = currentIndex;
+
+  if (toggleSlider) {
+    if (prevIndex !== null && prevIndex !== newIndex) {
+
+      toggleSlider.style.transition = 'none';
+      toggleSlider.style.transform = `translateX(${prevIndex * 100}%)`;
+
+
+      toggleSlider.offsetHeight;
+
+      toggleSlider.style.transition = ''; 
+
+      requestAnimationFrame(() => {
+        toggleSlider.style.transform = `translateX(${newIndex * 100}%)`;
+      });
+    } else {
+
+      toggleSlider.style.transition = 'none';
+      toggleSlider.style.transform = `translateX(${newIndex * 100}%)`;
+
+      requestAnimationFrame(() => {
+        toggleSlider.style.transition = ''; // back to normal
+      });
+    }
+  }
+
   toggleButtons.forEach((btn, idx) => {
     const href = btn.getAttribute('href');
-    // Determine if this button corresponds to the page
-    const isHomeBtn = href.includes('index');
+    const isHomeBtn = href === '/' || href.includes('index');
     const isAboutBtn = href.includes('about');
     const active = (page === 'home' && isHomeBtn) || (page === 'about' && isAboutBtn);
     btn.classList.toggle('active', active);
-    if (active && toggleSlider) {
-      toggleSlider.style.transform = `translateX(${idx * 100}%)`;
-    }
   });
+
+  sessionStorage.removeItem('togglePrevIndex');
 });
 
 
