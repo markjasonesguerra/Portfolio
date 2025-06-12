@@ -883,12 +883,42 @@ footer p {
   }
 
   .menu-icon {
-    width: 10vw;
-    height: 10vw;
+    width: 50px;
+    height: 50px;
+    min-width: 36px;
+    min-height: 36px;
     max-width: 50px;
     max-height: 50px;
-    min-width: 30px;
-    min-height: 30px;
+    box-shadow: 0 2px 8px #0001;
+  }
+
+    .menu-icon .bar {
+    width: 21px;
+    height: 1.5px;
+    margin: 3px 0;
+  }
+
+  .menu-popup {
+    top: 48px; /* Just below the smaller menu icon */
+    right: 0;
+    left: auto;
+    width: 140px;
+    min-width: 120px;
+    padding: 6px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px #0002;
+    font-size: 14px;
+  }
+
+  .menu-popup ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-popup li {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 6px;
   }
 
   .toggle {
