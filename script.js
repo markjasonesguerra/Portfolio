@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
     toggleButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault(); // Prevent default navigation
-            
+
+            // Navigate to the clicked tab
+            window.location.href = this.getAttribute('href');
         });
     });
     
