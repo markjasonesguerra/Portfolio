@@ -1,42 +1,22 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
-    const toggleSlider = document.querySelector('.toggle-slider');
-    
-    // Determine the current page using URL
-    const currentPage = window.location.pathname === '/about.html' ? 'about' : 'home';
-
-    // Highlight the correct button and update slider
-    const updateActiveButton = () => {
-        toggleButtons.forEach(button => {
-            const isActive = button.getAttribute('href').includes(currentPage);
-            button.classList.toggle('active', isActive); // Add/remove active class based on page
-        });
-    };
-
-    const updateSliderPosition = () => {
-        const activeButton = document.querySelector('.toggle-btn.active');
-        if (activeButton) {
-            const activeIndex = Array.from(toggleButtons).indexOf(activeButton);
-            if (toggleSlider && activeIndex !== -1) {
-                toggleSlider.style.transform = `translateX(${activeIndex * 100}%)`;
-            }
-        }
-    };
-
-    // Update UI on load
-    updateActiveButton();
-    updateSliderPosition();
-
-    // Update UI when a toggle button is clicked
-    toggleButtons.forEach(button => {
-      const href = button.getAttribute('href');
-      const isActive =
-        (currentPage === 'home' && (href === '/' || href === '/index.html')) ||
-        (currentPage === 'about' && href === '/about.html');
-      button.classList.toggle('active', isActive);
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleButtons = document.querySelectorAll('.toggle-btn');
+  const toggleSlider = document.querySelector('.toggle-slider');
+  let p = window.location.pathname.replace(/\/$/, ''); // strip trailing slash
+  let page = 'home';
+  if (p.includes('about')) page = 'about';
+  // You could add more checks, but beware of false positives (e.g., ‘/projects/about.html’).
+  toggleButtons.forEach((btn, idx) => {
+    const href = btn.getAttribute('href');
+    // Determine if this button corresponds to the page
+    const isHomeBtn = href.includes('index');
+    const isAboutBtn = href.includes('about');
+    const active = (page === 'home' && isHomeBtn) || (page === 'about' && isAboutBtn);
+    btn.classList.toggle('active', active);
+    if (active && toggleSlider) {
+      toggleSlider.style.transform = `translateX(${idx * 100}%)`;
+    }
+  });
 });
-
 
 
 window.addEventListener('scroll', function() {
