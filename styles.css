@@ -444,6 +444,59 @@ header.active {
   transform: rotate(-45deg) translate(5.5px, -5.5px);
 }
 
+.back-icon {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 40px #0000001f;
+  transition: transform 0.3s, box-shadow 0.3s;
+  
+}
+
+.back-icon:hover {
+  transform: rotate(-5deg);
+  box-shadow: 0 4px 10px rgba(59,58,58,0.3);
+}
+
+.back-icon .bar {
+  position: absolute;
+  background: #444;
+  height: 2px;
+  border-radius: 2px;
+  transition: transform 0.3s;
+  left: 20px;
+}
+
+.back-icon .shaft {
+  width: 25px; /* Longer tail */
+  top: 31px;
+  height: 2px;
+}
+
+.back-icon .wing1,
+.back-icon .wing2 {
+  width: 12px; /* Shorter wings */
+}
+
+.back-icon .wing1 {
+  top: 27px;
+  transform: rotate(-45deg);
+  left: 19px;
+}
+
+.back-icon .wing2 {
+  top: 35px;
+  transform: rotate(45deg);
+  left: 19px;
+}
+
 .menu-popup {
   position: absolute;
   top: 80px;
@@ -451,7 +504,7 @@ header.active {
   background-color: white;
   border-radius: 16px;
   box-shadow: 0 8px 40px #0000001f;
-  padding: 10px 0;
+  padding: 10px 10px;
   width: 160px;
   opacity: 0;
   transform: scale(0.9);
@@ -474,6 +527,7 @@ header.active {
 
 .menu-popup li {
   display: flex;
+  text-decoration: none;
   align-items: center;
   padding: 12px 24px;
   color: #282828;
@@ -483,6 +537,13 @@ header.active {
   transition: background 0.2s;
   border-radius: 8px;
 }
+
+.menu-popup li a {
+  text-decoration: none;
+  color: inherit; 
+  display: flex;
+  align-items: center;
+} 
 
 .menu-popup li.disabled {
   opacity: 0.4;
@@ -908,10 +969,58 @@ footer p {
     box-shadow: 0 2px 8px #0001;
   }
 
-    .menu-icon .bar {
+  .menu-icon .bar {
     width: 21px;
     height: 1.5px;
     margin: 3px 0;
+  }
+
+  .menu-icon .top {
+    margin-bottom: 2px;
+  }
+
+  .menu-icon .middle {
+    margin: 1;
+  }
+
+  .menu-icon .bottom {
+    margin-top: 1.5px;
+  }
+
+  .back-icon{
+    width: 50px;
+    height: 50px;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 50px;
+    max-height: 50px;
+    box-shadow: 0 2px 8px #0001;
+  }
+
+  .back-icon .bar {
+    width: 16px; /* Adjusted for smaller screens */
+    height: 2px;
+  }
+
+  .back-icon .shaft {
+    width: 16px; /* Adjusted for smaller screens */
+    top: 25px;
+    height: 2px;
+    left: 18px; /* Adjusted for smaller screens */
+  }
+
+  .back-icon .wing1 {
+    width: 10px;
+    top: 22px;
+    left: 16px; /* Adjusted for smaller screens */
+    transform: rotate(-45deg);
+  }
+
+  .back-icon .wing2 {
+    width: 10px;
+    top: 28px;
+    left: 16px; /* Adjusted for smaller screens */
+    transform: rotate(45deg);
   }
 
   .menu-popup {
