@@ -53,15 +53,18 @@ main {
 }
 
 .avatar {
-  position: relative;
-  z-index: 100;
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s;
-  filter: drop-shadow(0px 8px 20px rgba(0, 0, 0, 0.25));
+  width: 64px;
+  height: 64px;
+  background: #fff;
   border-radius: 50%;
-  overflow: visible;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 8px 40px #0000001f;
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
 }
 
 .avatar:hover {
@@ -74,8 +77,8 @@ main {
 }
 
 .avatar img {
-  width: 66px;
-  height: 66px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   display: block;
 }
@@ -462,36 +465,10 @@ main {
   box-shadow: 0 4px 10px rgba(59,58,58,0.3);
 }
 
-.back-icon .bar {
-  position: absolute;
-  background: #444;
-  height: 2px;
-  border-radius: 2px;
-  transition: transform 0.3s;
-  left: 20px;
-}
-
-.back-icon .shaft {
-  width: 25px; /* Longer tail */
-  top: 31px;
-  height: 2px;
-}
-
-.back-icon .wing1,
-.back-icon .wing2 {
-  width: 12px; /* Shorter wings */
-}
-
-.back-icon .wing1 {
-  top: 27px;
-  transform: rotate(-45deg);
-  left: 19px;
-}
-
-.back-icon .wing2 {
-  top: 35px;
-  transform: rotate(45deg);
-  left: 19px;
+.back-icon img {
+  width: 30px;
+  height: 30px;
+  display: block;
 }
 
 .menu-popup {
@@ -754,6 +731,11 @@ footer p {
   color: gray;
 }
 
+.footer-logo img {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
 #firefly-bg {
   position: fixed;
   top: 0;
@@ -915,32 +897,6 @@ footer p {
     max-width: 50px;
     max-height: 50px;
     box-shadow: 0 2px 8px #0001;
-  }
-
-  .back-icon .bar {
-    width: 16px; /* Adjusted for smaller screens */
-    height: 2px;
-  }
-
-  .back-icon .shaft {
-    width: 16px; /* Adjusted for smaller screens */
-    top: 25px;
-    height: 2px;
-    left: 18px; /* Adjusted for smaller screens */
-  }
-
-  .back-icon .wing1 {
-    width: 10px;
-    top: 22px;
-    left: 16px; /* Adjusted for smaller screens */
-    transform: rotate(-45deg);
-  }
-
-  .back-icon .wing2 {
-    width: 10px;
-    top: 28px;
-    left: 16px; /* Adjusted for smaller screens */
-    transform: rotate(45deg);
   }
 
   .menu-popup {

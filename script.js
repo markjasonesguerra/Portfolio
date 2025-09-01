@@ -1,3 +1,4 @@
+// Header inclusion
 document.addEventListener('DOMContentLoaded', function () {
   const headerContainer = document.getElementById('header-include');
   if (headerContainer) {
@@ -9,6 +10,18 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   } else {
     initializeHeaderScripts();
+  }
+});
+
+// Footer inclusion
+document.addEventListener('DOMContentLoaded', function () {
+  const footerContainer = document.getElementById('footer-include');
+  if (footerContainer) {
+    fetch('footer.html')
+      .then(response => response.text())
+      .then(html => {
+        footerContainer.innerHTML = html;
+      });
   }
 });
 
@@ -81,7 +94,7 @@ function initializeHeaderScripts() {
   const menuList = document.getElementById('menu-list');
 
   const menuItems = [
-    { label: "Photography", href: "photography.html", disabled: false },
+    { label: "Photography", href: "photography.html", disabled: false},
     { label: "Journey", href: "journey.html", disabled: true },
     { label: "Awards", href: "awards.html", disabled: true },
     { label: "Coming Soon", href: "#", disabled: true }
