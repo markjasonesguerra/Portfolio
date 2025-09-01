@@ -5,11 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.text())
       .then(html => {
         headerContainer.innerHTML = html;
-        // Now initialize header-related JS
         initializeHeaderScripts();
       });
   } else {
-    // If no dynamic header, just run header scripts
     initializeHeaderScripts();
   }
 });
@@ -77,13 +75,11 @@ function initializeHeaderScripts() {
 
   sessionStorage.removeItem('togglePrevIndex');
 
-
   // Menu toggle logic
   const menuToggle = document.getElementById('menuToggle');
   const menuPopup = document.getElementById('menuPopup');
   const menuList = document.getElementById('menu-list');
 
-  // Define your menu items here
   const menuItems = [
     { label: "Photography", href: "photography.html", disabled: false },
     { label: "Journey", href: "journey.html", disabled: true },
@@ -91,7 +87,6 @@ function initializeHeaderScripts() {
     { label: "Coming Soon", href: "#", disabled: true }
   ];
 
-  // Render menu items
   menuList.innerHTML = menuItems.map(item => `
     <li class="${item.disabled ? 'disabled' : ''}" ${item.disabled ? 'title="This feature is not available yet"' : ''}>
       ${item.disabled ? `<span>${item.label}</span>` : `<a href="${item.href}">${item.label}</a>`}
@@ -103,42 +98,45 @@ function initializeHeaderScripts() {
     menuPopup.classList.toggle('show');
   });
 
-  // Optional: close menu when clicking outside
   document.addEventListener('click', (e) => {
     if (!menuToggle.contains(e.target) && !menuPopup.contains(e.target)) {
-      menuToggle.classList.remove('active'); 
+      menuToggle.classList.remove('active');
       menuPopup.classList.remove('show');
     }
   });
 
-
-  // Mobile header hide on scroll 
+  // Mobile header hide on scroll
   let lastScrollY = window.scrollY;
   const header = document.querySelector('header');
-  const threshold = 50; // px from top before header can hide
+  const threshold = 50;
 
-  window.addEventListener('scroll', function() {
-    if (window.innerWidth <= 480) { // Only on mobile
+  window.addEventListener('scroll', function () {
+    if (window.innerWidth <= 480) {
       if (window.scrollY < threshold) {
-        // Always show header near the top
         header.classList.remove('hide-on-scroll');
       } else if (window.scrollY > lastScrollY) {
-        // Scrolling down
         header.classList.add('hide-on-scroll');
       } else {
-        // Scrolling up
         header.classList.remove('hide-on-scroll');
       }
       lastScrollY = window.scrollY;
     }
   });
 
+  // Show header when user moves mouse to top edge
+  document.addEventListener('mousemove', function (e) {
+    if (e.clientY <= 20) {
+      headerContainer.classList.add('show-on-hover');
+      headerContainer.classList.remove('hide-on-scroll');
+    } else if (!headerContainer.matches(':hover')) {
+      headerContainer.classList.remove('show-on-hover');
+    }
+  });
+
   // Back button logic
   const backBtn = document.getElementById('backBtn');
-  console.log('backBtn:', backBtn); // Should not be null
   if (backBtn) {
     backBtn.addEventListener('click', function () {
-      console.log('Back button clicked');
       window.location.href = "./";
     });
   }
@@ -159,68 +157,31 @@ function initializeHeaderScripts() {
   }
 }
 
-// Particle background effect
-window.addEventListener('scroll', function() {
-    const particles = document.querySelector('.tsparticles');
-    const scrollPosition = window.scrollY;
-    if (!particles) return; // Prevent error if not found
-    // Zoom-out factor as you scroll, capping at a maximum zoom level
-    const zoomOutFactor = Math.min(1 + scrollPosition / 600, 1.5);
-
-    // Apply zoom effect on particles
-    particles.style.backgroundSize = `${40 * zoomOutFactor}%`;
+// Particle background effect & movement
+window.addEventListener('scroll', function () {
+  const particles = document.querySelector('.tsparticles');
+  if (!particles) return;
+  const scrollPosition = window.scrollY;
+  const zoomOutFactor = Math.min(1 + scrollPosition / 600, 1.5);
+  particles.style.backgroundSize = `${40 * zoomOutFactor}%`;
 });
 
-// Particle movement with cursor
-window.addEventListener('mousemove', function(e) {
-    const particles = document.querySelector('.tsparticles');
-    if (!particles) return; // Prevent error if not found
-    // Get center of the viewport
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    // Calculate how far the cursor is from the center of the screen
-    const offsetX = (e.clientX - centerX) / centerX;
-    const offsetY = (e.clientY - centerY) / centerY;
-
-    // Adjust horizontal and vertical movement based on cursor
-    const moveX = offsetX * 15;
-    const moveY = offsetY * 15;
-
-    // Apply particle movement with cursor
-    particles.style.backgroundPosition = `calc(50% + ${moveX}px) calc(0% + ${moveY}px)`;
-});
-
-// Particle background effect
-window.addEventListener('scroll', function() {
-    const particles = document.querySelector('.tsparticles');
-    if (!particles) return; // Prevent error if not found
-    const scrollPosition = window.scrollY;
-    const zoomOutFactor = Math.min(1 + scrollPosition / 600, 1.5);
-    particles.style.backgroundSize = `${40 * zoomOutFactor}%`;
-});
-
-// Particle movement with cursor
-window.addEventListener('mousemove', function(e) {
-    const particles = document.querySelector('.tsparticles');
-    if (!particles) return; // Prevent error if not found
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-    const offsetX = (e.clientX - centerX) / centerX;
-    const offsetY = (e.clientY - centerY) / centerY;
-    const moveX = offsetX * 15;
-    const moveY = offsetY * 15;
-    particles.style.backgroundPosition = `calc(50% + ${moveX}px) calc(0% + ${moveY}px)`;
+window.addEventListener('mousemove', function (e) {
+  const particles = document.querySelector('.tsparticles');
+  if (!particles) return;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+  const offsetX = (e.clientX - centerX) / centerX;
+  const offsetY = (e.clientY - centerY) / centerY;
+  const moveX = offsetX * 15;
+  const moveY = offsetY * 15;
+  particles.style.backgroundPosition = `calc(50% + ${moveX}px) calc(0% + ${moveY}px)`;
 });
 
 // Project Card Animation on Scroll
 document.addEventListener('DOMContentLoaded', () => {
   const projectCards = document.querySelectorAll('.project-card');
-
-  const observerOptions = {
-    threshold: 0.3
-  };
-
+  const observerOptions = { threshold: 0.3 };
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -234,7 +195,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
 // Firefly Background Animation
 document.addEventListener('DOMContentLoaded', function () {
   const canvas = document.getElementById("firefly-bg");
@@ -247,26 +207,25 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   resizeCanvas();
 
-  // Generate fireflies with some blurrier than others
   const fireflies = [];
-    for (let i = 0; i < 80; i++) {
+  for (let i = 0; i < 80; i++) {
     const isSuperSmall = Math.random() < 0.2;
     fireflies.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: isSuperSmall ? Math.random() * 0.5 + 0.2 : Math.random() * 1.2 + 0.7,
-        dx: (Math.random() - 0.5) * 0.3,
-        dy: (Math.random() - 0.5) * 0.3,
-        opacity: Math.random() * 0.5 + 0.5,
-        direction: Math.random() < 0.5 ? 1 : -1,
-        blur: Math.random() < 0.5 ? 32 : Math.random() * 60 + 30 
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: isSuperSmall ? Math.random() * 0.5 + 0.2 : Math.random() * 1.2 + 0.7,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.5 + 0.5,
+      direction: Math.random() < 0.5 ? 1 : -1,
+      blur: Math.random() < 0.5 ? 32 : Math.random() * 60 + 30
     });
-    }
+  }
 
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     fireflies.forEach(f => {
-      // Outer glow (very soft, dirty white)
+      // Outer glow
       ctx.save();
       ctx.globalAlpha = f.opacity * 0.5;
       ctx.beginPath();
@@ -277,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ctx.fill();
       ctx.restore();
 
-      // Core (small, bright, dirty white)
+      // Core
       ctx.save();
       ctx.globalAlpha = f.opacity * 0.9;
       ctx.beginPath();
@@ -302,6 +261,5 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   draw();
-
   window.addEventListener("resize", resizeCanvas);
 });
