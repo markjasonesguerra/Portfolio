@@ -1135,19 +1135,18 @@ footer p {
   }
 
   .aboutMapcard {
-    width: 100%;
-    max-width: 100vw;
-    height: 140px;
-    min-height: 100px;
+    width: calc(100% - 24px); 
+    margin: 10px auto 50px auto; 
     border-radius: 10px;
-    margin: 100px auto;
+    box-sizing: border-box;
   }
+
   .aboutMapbg {
     border-radius: 10px;
     padding: 1px;
   }
   .aboutMapimage {
-    border-radius: 8px;
+    border-radius: 10px;
   }
   .aboutMappin {
     /* Center stays the same */
