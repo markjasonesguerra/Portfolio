@@ -276,3 +276,117 @@ document.addEventListener('DOMContentLoaded', function () {
   draw();
   window.addEventListener("resize", resizeCanvas);
 });
+
+// Free-drag hobby tags anywhere within the hobbies box
+document.addEventListener('DOMContentLoaded', enableHobbyDrag);
+document.addEventListener('DOMContentLoaded', initializeToolMarquee);
+
+function enableHobbyDrag() {
+  const hobbiesBox = document.getElementById('hobbiesBox');
+  if (!hobbiesBox) return;
+
+  const playground = hobbiesBox.querySelector('.hobby-tags');
+  if (!playground) return;
+
+  const tags = Array.from(playground.querySelectorAll('.hobby-tag'));
+  if (!tags.length) return;
+
+  const EDGE_PADDING = 12;
+  const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+  const ensureWithinBounds = (tag) => {
+    const maxLeft = Math.max(EDGE_PADDING, playground.clientWidth - tag.offsetWidth - EDGE_PADDING);
+    const maxTop = Math.max(EDGE_PADDING, playground.clientHeight - tag.offsetHeight - EDGE_PADDING);
+    const left = clamp(parseFloat(tag.style.left) || EDGE_PADDING, EDGE_PADDING, maxLeft);
+    const top = clamp(parseFloat(tag.style.top) || EDGE_PADDING, EDGE_PADDING, maxTop);
+    tag.style.left = `${left}px`;
+    tag.style.top = `${top}px`;
+  };
+
+  const placeTags = () => {
+    const innerWidth = Math.max(0, playground.clientWidth - EDGE_PADDING * 2);
+    const innerHeight = Math.max(0, playground.clientHeight - EDGE_PADDING * 2);
+    tags.forEach((tag, idx) => {
+      const tagWidth = tag.offsetWidth || 100;
+      const tagHeight = tag.offsetHeight || 40;
+      const maxLeft = Math.max(0, innerWidth - tagWidth);
+      const maxTop = Math.max(0, innerHeight - tagHeight);
+      const seed = (Math.sin(idx + 1) + 1) / 2; // deterministic pseudo-random
+      const jitter = (Math.cos((idx + 1) * 1.7) + 1) / 2;
+      const left = EDGE_PADDING + seed * maxLeft;
+      const top = EDGE_PADDING + jitter * maxTop;
+      tag.style.left = `${left}px`;
+      tag.style.top = `${top}px`;
+    });
+  };
+
+  tags.forEach(tag => {
+    tag.style.position = 'absolute';
+    tag.style.left = tag.style.left || `${EDGE_PADDING}px`;
+    tag.style.top = tag.style.top || `${EDGE_PADDING}px`;
+    tag.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      tag.setPointerCapture(event.pointerId);
+      tag.classList.add('dragging');
+
+      const startX = event.clientX;
+      const startY = event.clientY;
+      const initialLeft = parseFloat(tag.style.left) || EDGE_PADDING;
+      const initialTop = parseFloat(tag.style.top) || EDGE_PADDING;
+
+      const handleMove = (moveEvent) => {
+        const deltaX = moveEvent.clientX - startX;
+        const deltaY = moveEvent.clientY - startY;
+        const maxLeft = Math.max(EDGE_PADDING, playground.clientWidth - tag.offsetWidth - EDGE_PADDING);
+        const maxTop = Math.max(EDGE_PADDING, playground.clientHeight - tag.offsetHeight - EDGE_PADDING);
+        const nextLeft = clamp(initialLeft + deltaX, EDGE_PADDING, maxLeft);
+        const nextTop = clamp(initialTop + deltaY, EDGE_PADDING, maxTop);
+        tag.style.left = `${nextLeft}px`;
+        tag.style.top = `${nextTop}px`;
+      };
+
+      const handleRelease = () => {
+        tag.classList.remove('dragging');
+        tag.releasePointerCapture(event.pointerId);
+        tag.removeEventListener('pointermove', handleMove);
+        tag.removeEventListener('pointerup', handleRelease);
+        tag.removeEventListener('pointercancel', handleRelease);
+      };
+
+      tag.addEventListener('pointermove', handleMove);
+      tag.addEventListener('pointerup', handleRelease);
+      tag.addEventListener('pointercancel', handleRelease);
+    });
+  });
+
+  requestAnimationFrame(() => {
+    placeTags();
+    tags.forEach(ensureWithinBounds);
+  });
+
+  window.addEventListener('resize', () => {
+    tags.forEach(ensureWithinBounds);
+  });
+}
+
+function initializeToolMarquee() {
+  const tracks = document.querySelectorAll('.tools-row .tools-track');
+  tracks.forEach(track => {
+    if (track.dataset.marqueeInitialized === 'true') return;
+    const icons = Array.from(track.children);
+    if (!icons.length) return;
+
+    const fragment = document.createDocumentFragment();
+    icons.forEach(icon => {
+      fragment.appendChild(icon.cloneNode(true));
+    });
+
+    track.appendChild(fragment);
+    const distance = track.scrollWidth / 2;
+    track.style.setProperty('--tools-distance', `${distance}px`);
+    track.dataset.marqueeInitialized = 'true';
+  });
+}
+
+
+
