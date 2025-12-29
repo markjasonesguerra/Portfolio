@@ -1,3 +1,4 @@
+/* responsive overrides for photography page are defined later */
 /* 
     Name: Mark Jason Esguerra
     Date: 09-23-2024
@@ -473,6 +474,8 @@ main {
   align-items: stretch;
   width: 100%;
   max-width: 850px;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .interest-music {
@@ -574,6 +577,7 @@ main {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
 }
 
 .interest-hobbies,
@@ -586,7 +590,8 @@ main {
   border: 3px solid transparent; /* Use transparent to avoid overlap */
   position: relative;
   overflow: visible; /* Allow border radius to show */
-  min-width: 400px;
+  width: 100%;
+  min-width: 0;
   min-height: 190px;
   z-index: 1;
 }
@@ -737,6 +742,80 @@ main {
   z-index: 2;
   letter-spacing: 1px;
   line-height: normal;
+}
+
+/* Photography Page */
+.photography-page {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto 120px auto;
+  padding: 80px 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.photography-hero {
+  text-align: center;
+  padding: 32px 24px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #08080C 0%, #1b1034 100%);
+  border: 2px solid rgba(163, 203, 234, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.photography-label {
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.75rem;
+  margin-bottom: 12px;
+}
+
+.photography-hero h1 {
+  margin: 0 0 16px 0;
+  font-size: clamp(32px, 6vw, 56px);
+  color: #fff;
+  background: linear-gradient(120deg, #A3CBEA, #E0728B);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.photography-blurb {
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.photo-card {
+  background: rgba(8, 8, 12, 0.85);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+}
+
+.photo-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.photo-card figcaption {
+  padding: 16px 20px 18px 20px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
 }
 
 
@@ -1023,6 +1102,11 @@ main {
   margin-bottom: 20px;
   line-height: 170%;
   color: #5e5e63;
+  display: -webkit-box;
+  -webkit-line-clamp: 9; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Primary button styles */
@@ -1197,6 +1281,7 @@ footer p {
     align-items: stretch;
     max-width: 95vw;
     gap: 24px;
+    padding: 0 12px;
   }
 
   .interest-music {
@@ -1240,6 +1325,15 @@ footer p {
     width: 70px;
     height: 70px;
     border-width: 28px;
+  }
+
+  .photography-page {
+    padding: 60px 16px;
+    gap: 32px;
+  }
+
+  .photo-card img {
+    height: 240px;
   }
 
 }
@@ -1447,6 +1541,7 @@ footer p {
     flex-direction: column;
     max-width: 100%;
     gap: 20px;
+    padding: 0 12px;
   }
 
   .interest-music {
@@ -1492,6 +1587,14 @@ footer p {
     width: 100px;
     height: 100px;
     border-width: 40px;
+  }
+
+  .photography-page {
+    padding: 48px 12px 80px 12px;
+  }
+
+  .photo-card img {
+    height: 220px;
   }
 
 }
