@@ -280,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Free-drag hobby tags anywhere within the hobbies box
 document.addEventListener('DOMContentLoaded', enableHobbyDrag);
 document.addEventListener('DOMContentLoaded', initializeToolMarquee);
+document.addEventListener('DOMContentLoaded', initializeAboutMoreToggle);
 
 function enableHobbyDrag() {
   const hobbiesBox = document.getElementById('hobbiesBox');
@@ -372,19 +373,86 @@ function enableHobbyDrag() {
 function initializeToolMarquee() {
   const tracks = document.querySelectorAll('.tools-row .tools-track');
   tracks.forEach(track => {
-    if (track.dataset.marqueeInitialized === 'true') return;
-    const icons = Array.from(track.children);
-    if (!icons.length) return;
+    const initialize = () => {
+      const isInitialized = track.dataset.marqueeInitialized === 'true';
+      const icons = Array.from(track.children);
+      if (!icons.length) return;
 
-    const fragment = document.createDocumentFragment();
-    icons.forEach(icon => {
-      fragment.appendChild(icon.cloneNode(true));
+      if (!isInitialized) {
+        const fragment = document.createDocumentFragment();
+        icons.forEach(icon => {
+          fragment.appendChild(icon.cloneNode(true));
+        });
+
+        track.appendChild(fragment);
+      }
+
+      const distance = track.scrollWidth / 2;
+      track.style.setProperty('--tools-distance', `${distance}px`);
+      track.dataset.marqueeInitialized = 'true';
+
+      track.style.animation = 'none';
+      track.offsetHeight;
+      track.style.animation = '';
+    };
+
+    const images = Array.from(track.querySelectorAll('img'));
+    const pending = images.filter(img => !img.complete);
+
+    if (pending.length === 0) {
+      requestAnimationFrame(initialize);
+    } else {
+      let loadedCount = 0;
+      const handleLoad = () => {
+        loadedCount += 1;
+        if (loadedCount === pending.length) {
+          requestAnimationFrame(initialize);
+        }
+      };
+      pending.forEach(img => {
+        img.addEventListener('load', handleLoad, { once: true });
+        img.addEventListener('error', handleLoad, { once: true });
+      });
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    tracks.forEach(track => {
+      if (track.dataset.marqueeInitialized !== 'true') return;
+      const distance = track.scrollWidth / 2;
+      track.style.setProperty('--tools-distance', `${distance}px`);
+      track.style.animation = 'none';
+      track.offsetHeight;
+      track.style.animation = '';
     });
+  });
+}
 
-    track.appendChild(fragment);
-    const distance = track.scrollWidth / 2;
-    track.style.setProperty('--tools-distance', `${distance}px`);
-    track.dataset.marqueeInitialized = 'true';
+function initializeAboutMoreToggle() {
+  const toggleBtn = document.getElementById('showMoreToggle');
+  const content = document.getElementById('aboutMoreContent');
+  if (!toggleBtn || !content) return;
+
+  const label = toggleBtn.querySelector('.showmore-text');
+
+  const setExpanded = (expanded) => {
+    toggleBtn.setAttribute('aria-expanded', String(expanded));
+    content.classList.toggle('is-collapsed', !expanded);
+    if (label) {
+      label.textContent = expanded ? 'Less About Me' : 'More About Me';
+    }
+    if (expanded) {
+      requestAnimationFrame(() => {
+        initializeToolMarquee();
+      });
+    }
+  };
+
+  setExpanded(false);
+
+  toggleBtn.addEventListener('click', () => {
+    const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    setExpanded(!isExpanded);
   });
 }
 
