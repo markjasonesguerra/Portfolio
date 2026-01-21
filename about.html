@@ -138,6 +138,8 @@
               <img src="images/reddit.svg" alt="Reddit">
               <img src="images/discord.svg" alt="Discord">
               <img src="images/Fedora.svg" alt="Fedora">
+              <img src="images/Adobe.svg" alt="Adobe">
+              <img src="images/CloudFlare.svg" alt="CloudFlare">
             </div>
           </div>
           <div class="tools-row tools-row-bottom">
@@ -163,13 +165,44 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
+
+    <div class="contact-me-section" id="contact">
+      <div class="contact-card">
+        <h2 class="contact-title">Get in Touch</h2>
+        <p class="contact-subtitle">Have a question or want to work together? Send me a message.</p>
+
+        <form class="contact-form" action="https://formspree.io/f/xjggaool" method="post">
+          <label class="contact-label" for="contactName">Name</label>
+          <input class="contact-input" type="text" id="contactName" name="name" placeholder="Enter your name" required>
+
+          <label class="contact-label" for="contactEmail">Email</label>
+          <input class="contact-input" type="email" id="contactEmail" name="email" placeholder="your@email.com" required>
+
+          <label class="contact-label" for="contactMessage">Message</label>
+          <textarea class="contact-textarea" id="contactMessage" name="message" rows="6" placeholder="Write your message here..." required></textarea>
+
+          <div class="contact-actions">
+            <button class="contact-submit" type="submit">
+              <span class="button-text">Send Message</span>
+              <img src="images/icons8-send.png" alt="" class="contact-submit-icon" aria-hidden="true">
+            </button>
+
+            <div class="contact-turnstile">
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAACNw-MxgoIoGgL8N"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+
 
   <div id="footer-include"></div>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="script.js"></script>
 </body>
 </html>

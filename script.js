@@ -281,6 +281,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', enableHobbyDrag);
 document.addEventListener('DOMContentLoaded', initializeToolMarquee);
 document.addEventListener('DOMContentLoaded', initializeAboutMoreToggle);
+document.addEventListener('DOMContentLoaded', initializeContactFormFeedback);
 
 function enableHobbyDrag() {
   const hobbiesBox = document.getElementById('hobbiesBox');
@@ -453,6 +454,83 @@ function initializeAboutMoreToggle() {
   toggleBtn.addEventListener('click', () => {
     const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
     setExpanded(!isExpanded);
+  });
+}
+
+function initializeContactFormFeedback() {
+  const forms = Array.from(document.querySelectorAll('.contact-form'));
+  if (!forms.length) return;
+
+  forms.forEach(form => {
+    const submitBtn = form.querySelector('.contact-submit');
+    if (!submitBtn) return;
+
+    let status = form.querySelector('.contact-status');
+    if (!status) {
+      status = document.createElement('div');
+      status.className = 'contact-status';
+      submitBtn.insertAdjacentElement('afterend', status);
+    }
+
+    const showStatus = (message, stateClass) => {
+      status.textContent = message;
+      status.classList.remove('is-success', 'is-error');
+      status.classList.add(stateClass);
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.classList.remove('is-sent', 'is-sending');
+        form.classList.add('is-failed');
+        showStatus('Please fill out all fields correctly.', 'is-error');
+        form.reportValidity();
+        setTimeout(() => form.classList.remove('is-failed'), 600);
+        return;
+      }
+
+      const endpoint = form.getAttribute('action');
+      if (!endpoint) {
+        form.classList.add('is-failed');
+        showStatus('Missing form endpoint.', 'is-error');
+        return;
+      }
+
+      form.classList.remove('is-failed', 'is-sent');
+      form.classList.add('is-sending');
+      showStatus('Sending message…', 'is-success');
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          form.reset();
+          form.classList.remove('is-sending');
+          form.classList.add('is-sent');
+          showStatus('Message sent! Thank you!', 'is-success');
+          setTimeout(() => form.classList.remove('is-sent'), 900);
+        } else {
+          const data = await response.json().catch(() => ({}));
+          const errorText = data?.errors?.[0]?.message || 'Message failed to send. Please try again.';
+          form.classList.remove('is-sending');
+          form.classList.add('is-failed');
+          showStatus(errorText, 'is-error');
+          setTimeout(() => form.classList.remove('is-failed'), 900);
+        }
+      } catch (error) {
+        form.classList.remove('is-sending');
+        form.classList.add('is-failed');
+        showStatus('Network error. Please try again.', 'is-error');
+        setTimeout(() => form.classList.remove('is-failed'), 900);
+      }
+    });
   });
 }
 
