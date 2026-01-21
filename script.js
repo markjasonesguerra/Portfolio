@@ -282,6 +282,7 @@ document.addEventListener('DOMContentLoaded', enableHobbyDrag);
 document.addEventListener('DOMContentLoaded', initializeToolMarquee);
 document.addEventListener('DOMContentLoaded', initializeAboutMoreToggle);
 document.addEventListener('DOMContentLoaded', initializeContactFormFeedback);
+document.addEventListener('DOMContentLoaded', initializeCvRequestPrefill);
 
 function enableHobbyDrag() {
   const hobbiesBox = document.getElementById('hobbiesBox');
@@ -532,6 +533,31 @@ function initializeContactFormFeedback() {
       }
     });
   });
+}
+
+function initializeCvRequestPrefill() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('prefill') !== 'cv') return;
+
+  const messageField = document.getElementById('contactMessage');
+  if (!messageField) return;
+
+  const toggleBtn = document.getElementById('showMoreToggle');
+  const content = document.getElementById('aboutMoreContent');
+  if (toggleBtn && content && content.classList.contains('is-collapsed')) {
+    toggleBtn.click();
+  }
+
+  const message = 'Hi Mark,\n\nI would like to request a copy of your resume/CV for review.\n\nThank you!';
+  messageField.value = message;
+  messageField.dispatchEvent(new Event('input', { bubbles: true }));
+
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    requestAnimationFrame(() => {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
 }
 
 
