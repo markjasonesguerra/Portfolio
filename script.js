@@ -475,7 +475,7 @@ function initializeContactFormFeedback() {
 
     const showStatus = (message, stateClass) => {
       status.textContent = message;
-      status.classList.remove('is-success', 'is-error');
+      status.classList.remove('is-success', 'is-error', 'is-warning');
       status.classList.add(stateClass);
     };
 
@@ -488,6 +488,15 @@ function initializeContactFormFeedback() {
         showStatus('Please fill out all fields correctly.', 'is-error');
         form.reportValidity();
         setTimeout(() => form.classList.remove('is-failed'), 600);
+        return;
+      }
+
+      const turnstileResponse = form.querySelector('input[name="cf-turnstile-response"]')?.value?.trim();
+      if (form.querySelector('.cf-turnstile') && !turnstileResponse) {
+        form.classList.remove('is-sent', 'is-sending');
+        form.classList.add('is-failed');
+        showStatus('Please complete the verification before sending.', 'is-warning');
+        setTimeout(() => form.classList.remove('is-failed'), 900);
         return;
       }
 
