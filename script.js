@@ -537,7 +537,8 @@ function initializeContactFormFeedback() {
 
 function initializeCvRequestPrefill() {
   const params = new URLSearchParams(window.location.search);
-  if (params.get('prefill') !== 'cv') return;
+  const prefill = params.get('prefill');
+  if (!prefill) return;
 
   const messageField = document.getElementById('contactMessage');
   if (!messageField) return;
@@ -548,7 +549,15 @@ function initializeCvRequestPrefill() {
     toggleBtn.click();
   }
 
-  const message = 'Hi Mark,\n\nI would like to request a copy of your resume/CV for review.\n\nThank you!';
+  const messages = {
+    cv: 'Hi Mark,\n\nI would like to request a copy of your resume/CV for review.\n\nThank you!',
+    huffman: 'Hi Mark,\n\nI want to request the Huffman Coding source code.\n\nThank you.',
+    atm: 'Hi Mark,\n\nI want to request the Automated Teller Machine source code.\n\nThank you.'
+  };
+
+  const message = messages[prefill];
+  if (!message) return;
+
   messageField.value = message;
   messageField.dispatchEvent(new Event('input', { bubbles: true }));
 

@@ -1,0 +1,26 @@
+{
+  "name": "MJ Portfolio",
+  "short_name": "MJ Portfolio",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f0f12",
+  "theme_color": "#0f0f12",
+  "icons": [
+    {
+      "src": "images/3dAvatar.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/3dAvatar.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "images/3dAvatar.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
