@@ -95,6 +95,7 @@ function initializeHeaderScripts() {
 
   const menuItems = [
     { label: "Photography", href: "photography.html", disabled: false},
+    { label: "Other Projects", href: "other-projects.html", disabled: false},
     { label: "Journey", href: "journey.html", disabled: true },
     { label: "Awards", href: "awards.html", disabled: true },
     { label: "Coming Soon", href: "#", disabled: true }
